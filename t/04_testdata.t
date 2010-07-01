@@ -10,7 +10,7 @@ my $tests = [
     [ 'auths', 'FOOBAR', 'Foo Bar', 'foobar@cpan.org' ],
     [ 'mods',  'Foo::Bar','Foo-Bar','0.01','FOOBAR','0.01' ],
     [ 'dists', 'Foo-Bar','FOOBAR','F/FO/FOOBAR/Foo-Bar-0.01.tar.gz','0.01' ],
-    [ 'timestamp', $time ],
+    [ 'timestamp', $time, $time ],
 ];
 
 plan tests => scalar @{ $tests };

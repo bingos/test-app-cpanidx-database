@@ -1,13 +1,12 @@
 package Test::App::CPANIDX::Database;
 
+# ABSTRACT: generate a test database for App::CPANIDX
+
 use strict;
 use warnings;
 use DBI;
 use File::Spec;
 use App::CPANIDX::Tables;
-use vars qw[$VERSION];
-
-$VERSION = '0.02';
 
 use constant CPANIDX => 'cpanidx.db';
 
@@ -33,14 +32,15 @@ sub new {
     auths => qq{INSERT INTO auths values (?,?,?)},
     mods  => qq{INSERT INTO mods values (?,?,?,?,?)},
     dists => qq{INSERT INTO dists values (?,?,?,?)},
-    timestamp => qq{INSERT INTO timestamp values(?)},
+    timestamp => qq{INSERT INTO timestamp values(?,?)},
   };
 
+  my $stamp = ( $self{time} || time() );
   my $data = [
     [ 'auths', 'FOOBAR', 'Foo Bar', 'foobar@cpan.org' ],
     [ 'mods',  'Foo::Bar','Foo-Bar','0.01','FOOBAR','0.01' ],
     [ 'dists', 'Foo-Bar','FOOBAR','F/FO/FOOBAR/Foo-Bar-0.01.tar.gz','0.01' ],
-    [ 'timestamp', ( $self{time} || time() ) ],
+    [ 'timestamp', $stamp, $stamp  ],
   ];
 
   foreach my $datum ( @{ $data } ) {
@@ -68,11 +68,7 @@ sub DESTROY {
 
 1;
 
-__END__
-
-=head1 NAME
-
-Test::App::CPANIDX::Database - generate a test database for App::CPANIDX
+=pod
 
 =head1 SYNOPSIS
 
@@ -141,16 +137,6 @@ Set this to an existing directory path where the database file should be created
 Returns the name of the database file that was generated.
 
 =back
-
-=head1 AUTHOR
-
-Chris C<BinGOs> Williams <chris@bingosnet.co.uk>
-
-=head1 LICENSE
-
-Copyright E<copy> Chris Williams
-
-This module may be used, modified, and distributed under the same terms as Perl itself. Please see the license that came with your Perl distribution for details.
 
 =head1 SEE ALSO
 
