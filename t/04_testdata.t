@@ -2,9 +2,12 @@ use strict;
 use warnings;
 use Test::More;
 use DBI;
+use File::Temp qw[tempdir];
 use Test::App::CPANIDX::Database;
 
 my $time = time();
+
+my $tmpd = tempdir( DIR => '.', CLEANUP => 1 );
 
 my $tests = [
     [ 'auths', 'FOOBAR', 'Foo Bar', 'foobar@cpan.org' ],
@@ -15,7 +18,7 @@ my $tests = [
 
 plan tests => scalar @{ $tests };
 
-my $tdb = Test::App::CPANIDX::Database->new( time => $time );
+my $tdb = Test::App::CPANIDX::Database->new( dir => $tmpd, time => $time );
 my $dbfile = $tdb->dbfile;
 my $dbh = DBI->connect("dbi:SQLite:dbname=$dbfile",'','') or die $DBI::errstr;
 

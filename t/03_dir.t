@@ -4,10 +4,10 @@ use Test::More tests => 3;
 use File::Temp qw[tempdir];
 use Test::App::CPANIDX::Database;
 
-my $tmpd = tempdir( CLEANUP => 1 );
+my $tmpd = tempdir( DIR => '.', CLEANUP => 1 );
 
 my $loc;
-{ 
+{
    my $tdb = Test::App::CPANIDX::Database->new( dir => $tmpd );
    isa_ok( $tdb, q{Test::App::CPANIDX::Database} );
    diag( $tdb->dbfile );

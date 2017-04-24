@@ -15,7 +15,7 @@ sub new {
   my %self = @_;
   $self{lc $_} = delete $self{$_} for keys %self;
   $self{unlink} = 1 unless defined $self{unlink} and !$self{unlink};
-  die "Invalid dir specified\n" if 
+  die "Invalid dir specified\n" if
     defined $self{dir} and !( -d File::Spec->rel2abs($self{dir}) );
   $self{dir} = File::Spec->rel2abs($self{dir}) if defined $self{dir};
   my $db = $self{dir} ? File::Spec->catfile( $self{dir}, CPANIDX ) : CPANIDX;
@@ -55,7 +55,7 @@ sub new {
 
 sub dbfile {
   my $self = shift;
-  return 
+  return
     $self->{dir} ? File::Spec->catfile( $self->{dir}, CPANIDX ) : CPANIDX;
 }
 
@@ -94,7 +94,7 @@ Test::App::CPANIDX::Database will generate a test database for use with
 L<App::CPANIDX> deriatives.
 
 It generates a very simple L<DBD::SQLite> database which contains a single
-CPAN author C<FOOBAR>, a single distribution C<Foo-Bar-0.01.tar.gz> and a 
+CPAN author C<FOOBAR>, a single distribution C<Foo-Bar-0.01.tar.gz> and a
 single module C<Foo::Bar>.
 
 =head1 CONSTRUCTOR
